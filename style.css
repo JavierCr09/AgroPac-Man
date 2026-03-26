@@ -1,0 +1,302 @@
+:root {
+    --bg-color: #0d1117;
+    --card-bg: rgba(22, 27, 34, 0.8);
+    --accent-color: #58a6ff;
+    --text-color: #c9d1d9;
+    --glass-bg: rgba(13, 17, 23, 0.75);
+    --neon-yellow: #f1c40f;
+    --neon-blue: #3498db;
+    --neon-red: #e74c3c;
+    --neon-green: #2ecc71;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#game-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    background: var(--card-bg);
+    padding-bottom: 20px;
+}
+
+canvas {
+    border-radius: 4px;
+    background: #000;
+    margin-top: 10px;
+    box-shadow: 0 0 15px rgba(88, 166, 255, 0.15);
+    width: 95%;
+    max-width: 560px;
+    height: auto;
+    aspect-ratio: 560 / 620;
+    touch-action: none;
+}
+
+/* ====================== HUD ====================== */
+.hud {
+    width: 100%;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.hud-topic {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #8b949e;
+    text-align: left;
+    line-height: 1.4;
+    flex: 1;
+}
+
+.hud-stats {
+    display: flex;
+    gap: 30px;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.stat-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: 5px;
+}
+
+.stat-val {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--accent-color);
+}
+
+/* ====================== OVERLAYS ====================== */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    border-radius: 12px;
+    transition: opacity 0.3s ease;
+}
+
+.hidden {
+    display: none !important;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    padding: 35px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    max-width: 88%;
+    text-align: center;
+    animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(18px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ====================== SPLASH ====================== */
+.splash-content {
+    max-width: 380px;
+}
+
+.splash-icon {
+    font-size: 3rem;
+    margin-bottom: 8px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+.splash-desc {
+    font-size: 0.9rem;
+    color: #8b949e;
+    margin-bottom: 22px;
+    line-height: 1.5;
+}
+
+/* ====================== TITLES ====================== */
+h1 {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    background: linear-gradient(45deg, var(--neon-yellow), var(--neon-blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* ====================== BUTTONS ====================== */
+.topic-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    width: 100%;
+}
+
+button {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 14px 22px;
+    font-size: 1.05rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+button:hover:not(:disabled) {
+    background: var(--accent-color);
+    box-shadow: 0 0 12px var(--accent-color);
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ====================== LEVELS ====================== */
+.level-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+    max-height: 350px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.level-btn {
+    width: 45px;
+    height: 45px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 50%;
+}
+
+.level-btn.locked {
+    background: rgba(255, 255, 255, 0.05);
+    color: #666;
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* ====================== TRIVIA ====================== */
+.fact-badge {
+    display: inline-block;
+    background: rgba(241, 196, 15, 0.12);
+    border: 1px solid rgba(241, 196, 15, 0.35);
+    color: var(--neon-yellow);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.trivia-info {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.option-btn {
+    font-size: 0.92rem;
+    padding: 11px;
+}
+
+.option-btn.correct {
+    background: var(--neon-green) !important;
+}
+
+.option-btn.wrong {
+    background: var(--neon-red) !important;
+}
+
+.trivia-feedback {
+    margin-top: 14px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.correct-fb {
+    background: rgba(46, 204, 113, 0.15);
+    color: var(--neon-green);
+}
+
+.wrong-fb {
+    background: rgba(231, 76, 60, 0.15);
+    color: var(--neon-red);
+}

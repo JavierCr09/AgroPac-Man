@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Pac-Man Educativo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="game-container">
+        <div class="hud">
+            <div id="topic-label" class="hud-topic">
+                NIVEL 1 | TEMA:<br><span>-</span>
+            </div>
+            <div class="hud-stats">
+                <div class="stat-box">
+                    <span class="stat-title">Puntos:</span>
+                    <span id="score" class="stat-val">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-title">Vidas:</span>
+                    <span id="lives" class="stat-val">3</span>
+                </div>
+            </div>
+        </div>
+
+        <canvas id="gameCanvas" width="560" height="620"></canvas>
+
+
+        <!-- ============ SPLASH / START SCREEN ============ -->
+        <div id="splash-overlay" class="overlay">
+            <div class="modal-content splash-content">
+                <div class="splash-icon">🟡</div>
+                <h1>Pac-Man Educativo</h1>
+                <p style="margin-bottom:8px; color:#8b949e;">Aprende mientras juegas</p>
+                <p class="splash-desc">Come las cerezas para aprender conceptos y responder trivias. ¡Pero cuidado con
+                    los fantasmas!</p>
+                <button id="btn-start" onclick="showTopicMenu()">Comenzar</button>
+            </div>
+        </div>
+
+        <!-- ============ TOPIC SELECTION MENU ============ -->
+        <div id="menu-overlay" class="overlay hidden">
+            <div class="modal-content">
+                <h2 style="color:var(--accent-color); margin-bottom:5px;">Elige un Tema</h2>
+                <p style="margin-bottom: 20px; color:#8b949e; font-size:0.9rem;">Selecciona el área de las trivias:</p>
+                <div class="topic-list">
+                    <button onclick="showLevels('programming')">💻 Programación</button>
+                    <button onclick="showLevels('economy')">📈 Economía</button>
+                    <button onclick="showLevels('agronomy')">🌱 Agronomía</button>
+                    <button onclick="showLevels('oop')">🧩 POO</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ LEVEL SELECTION MENU ============ -->
+        <div id="level-overlay" class="overlay hidden">
+            <div class="modal-content" style="max-width: 450px;">
+                <h2 style="color:var(--neon-yellow); margin-bottom:5px;">Seleccionar Nivel</h2>
+                <p style="margin-bottom: 15px; color:#8b949e; font-size:0.9rem;">Tema: <span id="lvl-topic-display"></span></p>
+                <div id="level-grid" class="level-grid">
+                    <!-- Levels injected via JS -->
+                </div>
+                <button onclick="backToTopics()" style="margin-top:20px; width:auto;">&#8592; Volver</button>
+            </div>
+        </div>
+
+        <!-- ============ FACT MODAL ============ -->
+        <div id="fact-modal" class="overlay hidden">
+            <div class="modal-content">
+                <div class="fact-badge">📚 Concepto</div>
+                <h2 id="fact-title" style="color: var(--neon-yellow); margin: 10px 0 15px;">Cargando...</h2>
+                <p id="fact-text" class="trivia-info"></p>
+                <button onclick="showTrivia()">Continuar a la Trivia &#8594;</button>
+            </div>
+        </div>
+
+        <!-- ============ TRIVIA MODAL ============ -->
+        <div id="trivia-modal" class="overlay hidden">
+            <div class="modal-content">
+                <h2 style="color: var(--accent-color); margin-bottom: 15px;">🧠 Trivia</h2>
+                <p id="question-text" class="trivia-info"></p>
+                <div id="options-container" class="options-grid">
+                </div>
+                <p id="trivia-feedback" class="trivia-feedback hidden"></p>
+                <div style="margin-top: 20px;">
+                    <button onclick="goBackToFact()" style="background: rgba(255,255,255,0.1); font-size: 0.9rem; padding: 10px 15px;">&#8592; Volver al Concepto</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ GAME OVER / WIN MODAL ============ -->
+        <div id="end-overlay" class="overlay hidden">
+            <div class="modal-content">
+                <h1 id="end-title">¡Fin del Juego!</h1>
+                <p id="end-score" style="font-size: 1.5rem; margin-bottom: 20px;"></p>
+                <button onclick="location.reload()">Jugar de Nuevo</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="questions.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
